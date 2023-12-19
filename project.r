@@ -25,18 +25,20 @@ getSymbols(c('SPY','QQQ','^GSPC','F','META'),from=Sys.Date()-20, to=Sys.Date())
 windows() 
 chartSeries(SPY, TA=NULL,theme = chartTheme("white"))
 closeprice = Cl(SPY) # We assign the closing price to a new variable called closeprice.
+windows()
 plot(closeprice)
 
 stock_Price <- as.matrix(as.numeric(SPY[ , 4]))
 stock_Price
+windows() 
 plot(stock_Price)
+windows() 
 plot(stock_Price, type = 'l', col="blue", lwd=2)
 
 # This function returns the consecutive relative differences
 returns = function(Y){
   len = nrow(Y)
   yDif = Y[2:len, ] / Y[1:len-1, ] - 1
-#  yDif = (Y[2:len, ] - Y[1:len-1, ])/ Y[1:len-1, ] # same as above
 }
 
 stock_Returns <- returns(stock_Price)
@@ -100,6 +102,7 @@ for (i in 1:no_of_sims) {
   total_returns <- c(total_returns,tmp)
 }
 
+windows()
 hist(total_returns, col="blue", freq=TRUE)
 
 # repeating for larger number of simulations:
@@ -125,6 +128,7 @@ sd(total_returns)
 #Visualizing results:
 windows() 
 hist(total_returns, col="blue", freq=TRUE)
+
 boxplot(total_returns)
 
 windows() 
@@ -135,7 +139,6 @@ max <- which.max(total_returns) # Find index of maximum value
 min <- which.min(total_returns) # Find index of minimum value
 
 # Draw plot:
-windows() 
 lb <- min(prices_per_sim[min,])
 ub <- max(prices_per_sim[max,])
 plot(prices_per_sim[min, ], type='l', ylab="Simulated price of SPY", xlab="Days",ylim=c(lb,ub), col="blue")
