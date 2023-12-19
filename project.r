@@ -22,6 +22,7 @@ getSymbols(c('SPY','QQQ','^GSPC','F','META'),from=Sys.Date()-20, to=Sys.Date())
 # META is Meta Platforms, Inc. (Previously known as Facebook)
 
 # Visualization:
+windows() 
 chartSeries(SPY, TA=NULL,theme = chartTheme("white"))
 closeprice = Cl(SPY) # We assign the closing price to a new variable called closeprice.
 plot(closeprice)
@@ -47,6 +48,7 @@ as.numeric(SPY[ , 4])
 # SPY$SPY.Returns <- diff(SPY$SPY.Close)/lag(SPY$SPY.Close)
 # tail(SPY)
 
+windows() 
 hist(stock_Returns, col="blue", freq=TRUE)
 
 # repeating for larger time period
@@ -65,6 +67,7 @@ prices <- cumprod(c(starting_price, 1+stock_Returns))
 # sanity check (yet again):
 head(SPY)
 prices[1:6]
+windows() 
 plot(prices[1:20], type='l', lwd=2, ylab="Simulated price of SPY", xlab="Days",ylim=c(350,420))
 
 set.seed(101) #Set seed for reproducibility of the random numbers
@@ -120,9 +123,11 @@ summary(total_returns)
 sd(total_returns)
 
 #Visualizing results:
+windows() 
 hist(total_returns, col="blue", freq=TRUE)
 boxplot(total_returns)
 
+windows() 
 hist(total_returns, col="blue", freq=FALSE)
 lines(density(total_returns), lwd=2)
 
@@ -130,7 +135,7 @@ max <- which.max(total_returns) # Find index of maximum value
 min <- which.min(total_returns) # Find index of minimum value
 
 # Draw plot:
-
+windows() 
 lb <- min(prices_per_sim[min,])
 ub <- max(prices_per_sim[max,])
 plot(prices_per_sim[min, ], type='l', ylab="Simulated price of SPY", xlab="Days",ylim=c(lb,ub), col="blue")
