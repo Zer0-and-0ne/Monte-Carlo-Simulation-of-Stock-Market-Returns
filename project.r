@@ -1,39 +1,13 @@
 
 # Monte Carlo Simulation of Stock Market Returns
 
-# library(tidyquant)
+#library(tidyquant)
 library(quantmod)
 
 
 getSymbols("SPY", from = '2020-04-01')
 tail(SPY)
 View(SPY)
-getSymbols("SPY", from=Sys.Date()-20, to=Sys.Date())
-# https://www.youtube.com/watch?v=hZS31_nSlGg&t=202s
-?getSymbols
-getSymbols(c('SPY','QQQ','^GSPC','F','META'),from=Sys.Date()-20, to=Sys.Date())
-# you can find the 'symbols' or 'tickers' here: https://finance.yahoo.com/lookup
-# some popular tickers: 
-# SPY is SPDR S&P 500 ETF Trust ticker symbol
-# QQQ is Invesco QQQ Trust ticker symbol
-# ^GSPC is S&P500
-# PFE is Pfizer 
-# F is Ford
-# META is Meta Platforms, Inc. (Previously known as Facebook)
-
-# Visualization:
-windows() 
-chartSeries(SPY, TA=NULL,theme = chartTheme("white"))
-closeprice = Cl(SPY) # We assign the closing price to a new variable called closeprice.
-windows()
-plot(closeprice)
-
-stock_Price <- as.matrix(as.numeric(SPY[ , 4]))
-stock_Price
-windows() 
-plot(stock_Price)
-windows() 
-plot(stock_Price, type = 'l', col="blue", lwd=2)
 
 # This function returns the consecutive relative differences
 returns = function(Y){
@@ -41,20 +15,6 @@ returns = function(Y){
   yDif = Y[2:len, ] / Y[1:len-1, ] - 1
 }
 
-stock_Returns <- returns(stock_Price)
-prices <- cumprod(c(stock_Price[1], 1+stock_Returns))
-prices
-as.numeric(SPY[ , 4])
-
-# same as above, i.e. function 'returns'
-# SPY$SPY.Returns <- diff(SPY$SPY.Close)/lag(SPY$SPY.Close)
-# tail(SPY)
-
-windows() 
-hist(stock_Returns, col="blue", freq=TRUE)
-
-# repeating for larger time period
-getSymbols("SPY", from = '2022-04-01')
 stock_Price <- as.matrix(as.numeric(SPY[ , 4]))
 stock_Returns <- returns(stock_Price)
 hist(stock_Returns, col="blue", freq=TRUE)
@@ -70,7 +30,7 @@ prices <- cumprod(c(starting_price, 1+stock_Returns))
 head(SPY)
 prices[1:6]
 windows() 
-plot(prices[1:20], type='l', lwd=2, ylab="Simulated price of SPY", xlab="Days",ylim=c(350,420))
+plot(prices[1:20], type='l', lwd=2, ylab="Simulated price of SPY", xlab="Days",ylim=c(200,310))
 
 set.seed(101) #Set seed for reproducibility of the random numbers
 returns <- rnorm(no_of_days, mean=daily_mean, sd=daily_std_dev) #Generate random variables
